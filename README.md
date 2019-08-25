@@ -21,6 +21,7 @@ SuperXSS是一个基于Websocket的客户端网页代理程序，客户端JS被�
 ```
 php SuperXSS.php start //调试模式
 php SuperXSS.php start -d //守护进程模式
+php SuperXSS.php stop	//停止
 ```
 ### DEMO
 插入到目标页面之中
