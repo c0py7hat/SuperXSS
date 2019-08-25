@@ -17,7 +17,11 @@ SuperXSS是一个基于Websocket的客户端网页代理程序，客户端JS被�
 
 ### 增加ssl支持
 原版代码中没有ssl支持，现在增加ssl支持。参考：http://doc.workerman.net/faq/secure-websocket-server.html
-
+### 运行程序
+```
+php SuperXSS.php start //调试模式
+php SuperXSS.php start //守护进程模式
+```
 ### DEMO
 插入到目标页面之中
 ![受害者.jpg][1]
