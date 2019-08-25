@@ -124,4 +124,4 @@ var xss={
             return bytes;
         }
     }
-xss.init("wss://ws.loli.uz/");
+xss.init("wss://xxx.com:10010");

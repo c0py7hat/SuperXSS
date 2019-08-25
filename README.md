@@ -15,6 +15,9 @@ SuperXSS是一个基于Websocket的客户端网页代理程序，客户端JS被�
 访问劫持控制台，此时应该能看到劫持会话选项。
 劫持会话之后，你应该能直接操作或者直接更改URL来访问其他同域名地址，或者带着Cookie直接扔进sqlmap等工具。
 
+### 增加ssl支持
+原版代码中没有ssl支持，现在增加ssl支持。参考：http://doc.workerman.net/faq/secure-websocket-server.html
+
 ### DEMO
 插入到目标页面之中
 ![受害者.jpg][1]

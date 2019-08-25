@@ -8,12 +8,28 @@ require_once __DIR__ . '/GlobalData/Server.php';
 require_once __DIR__ . '/Function.php';
 $Config = require_once __DIR__ . '/Config.php';
 
-$Hijack_console_worker = new Worker($Config['HIJACK_CONSOLE_LISTEN']);
-$WS_listen_worker = new Worker($Config['WS_LISTEN']);
+
+// 证书最好是申请的证书
+$context = array(
+    // 更多ssl选项请参考手册 http://php.net/manual/zh/context.ssl.php
+    'ssl' => array(
+        // 请使用绝对路径
+        'local_cert'                 => '/etc/nginx/ssl/dnsfee.com_chain.crt', // 也可以是crt文件
+        'local_pk'                   => '/etc/nginx/ssl/dnsfee.com_key.key',
+        'verify_peer'                => false,
+        // 'allow_self_signed' => true, //如果是自签名证书需要开启此选项
+    )
+);
+
+$Hijack_console_worker = new Worker($Config['HIJACK_CONSOLE_LISTEN'], $context);
+$WS_listen_worker = new Worker($Config['WS_LISTEN'], $context);
 $GlobalData_Worker = new GlobalData\Server('127.0.0.1', 22018);
 
 $Hijack_console_worker -> count = $Config['CONSOLE_WORKER_COUNT'];
 $WS_listen_worker -> count = $Config['WS_WORKER_COUNT'];
+
+$Hijack_console_worker->transport = 'ssl';
+$WS_listen_worker->transport = 'ssl';
 
 //status: 0 已发送给ws 1 ws已经确认收到请求 2 已收到ws返回结果包
 

@@ -1,6 +1,6 @@
 <?php
 return array(
-    "REPLACE_ADDR"=>"http://loli.uz:10086",
+    "REPLACE_ADDR"=>"https://xxx.com:10086",
 	"HIJACK_CONSOLE_LISTEN" => "http://0.0.0.0:10086",
 	"WS_LISTEN" => "websocket://0.0.0.0:10010",
 	"CLIENT_TIMED_OUT" => 10,
