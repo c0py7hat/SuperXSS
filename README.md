@@ -23,6 +23,33 @@ php SuperXSS.php start //调试模式
 php SuperXSS.php start -d //守护进程模式
 php SuperXSS.php stop	//停止
 ```
+### Nginx代理
+参考：http://doc.workerman.net/faq/secure-websocket-server.html
+```
+server {
+  listen 443;
+
+  ssl on;
+  ssl_certificate /etc/ssl/server.pem;
+  ssl_certificate_key /etc/ssl/server.key;
+  ssl_session_timeout 5m;
+  ssl_session_cache shared:SSL:50m;
+  ssl_protocols SSLv3 SSLv2 TLSv1 TLSv1.1 TLSv1.2;
+  ssl_ciphers ALL:!ADH:!EXPORT56:RC4+RSA:+HIGH:+MEDIUM:+LOW:+SSLv2:+EXP;
+
+  location /wss
+  {
+    proxy_pass http://127.0.0.1:10010;
+    proxy_http_version 1.1;
+    proxy_set_header Upgrade $http_upgrade;
+    proxy_set_header Connection "Upgrade";
+    proxy_set_header X-Real-IP $remote_addr;
+  }
+
+  # location / {} 站点的其它配置...
+}
+```
+
 ### DEMO
 插入到目标页面之中
 ![受害者.jpg][1]
