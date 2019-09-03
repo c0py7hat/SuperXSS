@@ -14,8 +14,8 @@ $context = array(
     // 更多ssl选项请参考手册 http://php.net/manual/zh/context.ssl.php
     'ssl' => array(
         // 请使用绝对路径
-        'local_cert'                 => '/etc/nginx/ssl/dnsfee.com_chain.crt', // 也可以是crt文件
-        'local_pk'                   => '/etc/nginx/ssl/dnsfee.com_key.key',
+        'local_cert'                 => '/etc/nginx/ssl/xxx.com_chain.crt', // 也可以是crt文件
+        'local_pk'                   => '/etc/nginx/ssl/xxx.com_key.key',
         'verify_peer'                => false,
         // 'allow_self_signed' => true, //如果是自签名证书需要开启此选项
     )
