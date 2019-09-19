@@ -300,7 +300,7 @@ $Hijack_console_worker -> onMessage = function($connection, $data)use($Config){
 	$sessionlist = $GD_Client -> sessionlist;
 	$eval_pool = $GD_Client -> eval_pool;
 	if(!isset($_COOKIE['hijack_session']) && !isset($_GET['hijack_session'])){
-		$html = '<html><head><title>SuperXSS SESSION Hijack Console</title><link href="https://cdn.bootcss.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet"><script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script><script src="https://cdn.bootcss.com/bootstrap/4.0.0/js/bootstrap.min.js"></script></head><body>';
+		$html = '<html><head><title>SuperXSS SESSION Hijack Console</title><link href="https://cdn.bootcss.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet"><script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script><script src="https://cdn.bootcss.com/bootstrap/4.0.0/js/bootstrap.min.js"></script><meta http-equiv="refresh" content="5"></head><body>';
 		$html .= '<div class="container-fluid"><div class="row-fluid"><div class="span12"><h3 class="text-center">SuperXSS SESSION Hijack Console</h3>';
 
 		$html .= '<div class="alert alert-dismissible alert-info"><h4 class="alert-heading"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">提示！</font></font></h4><p class="mb-0"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">';
